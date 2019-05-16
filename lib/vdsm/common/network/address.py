@@ -36,10 +36,9 @@ def hosttail_split(hosttail):
         if _is_literal_ipv6_addr_soft_check(hosttail):
             host, tail = _ipv6addr_hosttail_split(hosttail)
         else:
+            if hosttail.count(':') != 1:
+                raise ValueError
             host, tail = hosttail.split(':', 1)
-
-        if not len(host) or not len(tail):
-            raise ValueError
 
     except ValueError:
         raise HosttailError('%s is not a valid hosttail address:' % hosttail)
